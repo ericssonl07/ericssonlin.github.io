@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ericsson Lin Portfolio</title>
+    <title>Ericsson Lin</title>
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             background-color: #000;
             color: #fff;
             display: flex;
@@ -16,6 +16,30 @@
             justify-content: center;
             height: 100vh;
             cursor: none; 
+            position: relative;
+            overflow: hidden; /* Prevent scrolling */
+            user-select: none;
+        }
+
+        #bg-video {
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            mask-image: linear-gradient(to top, transparent 0%, black 50%, transparent 100%);
+            user-select: none;
+            pointer-events: none;
+            filter: grayscale(1);
+            aspect-ratio: 16/9;
+        }
+
+
+        .content {
+            position: relative;
+            z-index: 1; /* Ensure content is above the iframe */
+            text-align: center; /* Center align text */
+            padding: 20px; /* Add padding to prevent overlap */
         }
 
         nav {
@@ -27,11 +51,13 @@
         }
 
         .nav-links {
+            position: fixed;
+            left: 60%;
             list-style: none;
             padding: 30px 50px;
             margin: 0;
             display: flex;
-            justify-content: right;
+            justify-content: right; /* Align nav links to the right */
             gap: 50px;
         }
 
@@ -73,6 +99,7 @@
         .social-links {
             margin-top: 20px;
             display: flex;
+            justify-content: center; /* Center align social links */
             gap: 20px;
         }
 
@@ -149,38 +176,47 @@
     </style>
 </head>
 <body>
-    <nav>
-        <ul class="nav-links">
-            <li>
-                <a href="#">Home</a>
-                <div class="popup">This is the Home section placeholder.</div>
-            </li>
-            <li>
-                <a href="#">About</a>
-                <div class="popup">This is the About section placeholder.</div>
-            </li>
-            <li>
-                <a href="#">Projects</a>
-                <div class="popup">This is the Projects section placeholder.</div>
-            </li>
-            <li>
-                <a href="#">Awards</a>
-                <div class="popup">This is the Awards section placeholder.</div>
-            </li>
-        </ul>
-    </nav>
-    <h1>ERICSSON</h1>
-    <h1>LIN</h1>
-    <div class="social-links">
-        <a href="https://github.com/ericssonl07/" target="_blank">
-            <img src="assets/github.png" alt="GitHub">
-        </a>
-        <a href="https://www.linkedin.com/in/jiahong-ericsson-lin/" target="_blank">
-            <img src="assets/linkedin.png" alt="LinkedIn">
-        </a>
-        <a href="https://www.youtube.com/@ericssonlin7114" target="_blank">
-            <img src="assets/youtube.png" alt="YouTube">
-        </a>
+    <iframe 
+        id=bg-video
+        src="https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=1&playlist=CzDWdnF8ViQ&start=60"
+        frameBorder="0"
+        allow="autoplay; encrypted-media" 
+        allowfullscreen>
+    </iframe>
+    <div class="content">
+        <nav>
+            <ul class="nav-links">
+                <li>
+                    <a href="#">Home</a>
+                    <div class="popup">This is the Home section placeholder.</div>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                    <div class="popup">This is the About section placeholder.</div>
+                </li>
+                <li>
+                    <a href="#">Projects</a>
+                    <div class="popup">This is the Projects section placeholder.</div>
+                </li>
+                <li>
+                    <a href="#">Awards</a>
+                    <div class="popup">This is the Awards section placeholder.</div>
+                </li>
+            </ul>
+        </nav>
+        <h1>ERICSSON LIN</h1>
+        <h1>林家泓</h1>
+        <div class="social-links">
+            <a href="https://github.com/ericssonl07/" target="_blank">
+                <img src="assets/github.png" alt="GitHub">
+            </a>
+            <a href="https://www.linkedin.com/in/jiahong-ericsson-lin/" target="_blank">
+                <img src="assets/linkedin.png" alt="LinkedIn">
+            </a>
+            <a href="https://www.youtube.com/@ericssonlin7114" target="_blank">
+                <img src="assets/youtube.png" alt="YouTube">
+            </a>
+        </div>
     </div>
     <div class="custom-cursor" id="customCursor"></div>
 
