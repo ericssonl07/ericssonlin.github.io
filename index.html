@@ -231,9 +231,9 @@
                 </li>
             </ul>
         </nav>
-        <h1>ERICSSON LIN</h1>
-        <h1>林家泓</h1>
-        <div class="social-links">
+        <h1 id="mainTitle">ERICSSON LIN</h1>
+        <h1 id="subTitle">林家泓</h1>
+        <div class="social-links" id="socialLinks">
             <a href="https://github.com/ericssonl07/" target="_blank">
                 <img src="assets/github.png" alt="GitHub">
             </a>
@@ -250,8 +250,6 @@
     <script>
         const cursor = document.getElementById('customCursor');
         const videoFrame = document.getElementById('bg-video');
-        const contentDiv = document.getElementById('content');
-        var isPlaying = false;
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.pageX + 'px';
