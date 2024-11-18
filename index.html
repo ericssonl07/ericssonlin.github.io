@@ -197,29 +197,29 @@
         allow="autoplay; encrypted-media" 
         allowfullscreen>
     </iframe>
-    <div class="content">
+    <div class="content" id="mainContent">
         <nav>
             <ul class="nav-links">
                 <li>
-                    <a href="#">Home</a>
+                    <a href="#" onclick="changeContent('Home')">Home</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="#" onclick="changeContent('About')">About</a>
                 </li>
                 <li>
-                    <a href="#">Projects</a>
+                    <a href="#" onclick="changeContent('Projects')">Projects</a>
                 </li>
                 <li>
-                    <a href="#">Awards</a>
+                    <a href="#" onclick="changeContent('Awards')">Awards</a>
                 </li>
                 <li>
-                    <a href="#" onclick="playVideo()">Music</a>
+                    <a href="#" onclick="changeContent('Music')">Music</a>
                 </li>
             </ul>
         </nav>
-        <h1>ERICSSON LIN</h1>
-        <h1>林家泓</h1>
-        <div class="social-links">
+        <h1 id="mainTitle">ERICSSON LIN</h1>
+        <h1 id="subTitle">林家泓</h1>
+        <div class="social-links" id="socialLinks">
             <a href="https://github.com/ericssonl07/" target="_blank">
                 <img src="assets/github.png" alt="GitHub">
             </a>
@@ -236,7 +236,6 @@
     <script>
         const cursor = document.getElementById('customCursor');
         const videoFrame = document.getElementById('bg-video');
-        var isPlaying = false;
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.pageX + 'px';
@@ -251,15 +250,40 @@
             cursor.style.display = 'block';
         });
 
-        function playVideo() {
-            if (isPlaying) {
+        function playVideo(shouldPlay) {
+            if (shouldPlay === false) {
                 videoFrame.style.display = 'none'; // Hide video
                 videoFrame.src = ""; // Stop video
-                isPlaying = false;
             } else {
                 videoFrame.style.display = 'block'; // Show video
                 videoFrame.src = "https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=0&playlist=CzDWdnF8ViQ&start=60"; // Start with sound
-                isPlaying = true;
+            }
+        }
+
+        function changeContent(section) {
+            const mainTitle = document.getElementById('mainTitle');
+            const subTitle = document.getElementById('subTitle');
+            const socialLinks = document.getElementById('socialLinks');
+
+            if (section === 'Home') {
+                mainTitle.textContent = 'ERICSSON LIN';
+                subTitle.textContent = '林家泓';
+                socialLinks.innerHTML = `
+                    <a href="https://github.com/ericssonl07/" target="_blank"><img src="assets/github.png" alt="GitHub"></a>
+                    <a href="https://www.linkedin.com/in/jiahong-ericsson-lin/" target="_blank"><img src="assets/linkedin.png" alt="LinkedIn"></a>
+                    <a href="https://www.youtube.com/@ericssonlin7114" target="_blank"><img src="assets/youtube.png" alt="YouTube"></a>
+                `;
+                playVideo(false);
+            } else if (section === 'Music') {
+                mainTitle.textContent = 'Music placeholder';
+                subTitle.textContent = '{Music section content} placeholder';
+                socialLinks.innerHTML = ''; // Optionally clear or modify social links for Music section
+                playVideo(true);
+            } else {
+                mainTitle.textContent = `${section} placeholder`;
+                subTitle.textContent = `{${section} section content} placeholder`;
+                socialLinks.innerHTML = ''; // Clear social links for other sections
+                playVideo(false);
             }
         }
     </script>
