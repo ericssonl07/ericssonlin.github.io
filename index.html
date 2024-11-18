@@ -32,8 +32,8 @@
             pointer-events: none;
             filter: grayscale(1);
             aspect-ratio: 16/9;
+            display: none; /* Hide the video initially */
         }
-
 
         .content {
             position: relative;
@@ -52,7 +52,7 @@
 
         .nav-links {
             position: fixed;
-            left: 60%;
+            left: 50%;
             list-style: none;
             padding: 30px 50px;
             margin: 0;
@@ -92,6 +92,19 @@
             to {
                 opacity: 1;
                 font-size: 80px;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInPlayButton {
+            from {
+                opacity: 0;
+                font-size: 0px;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                font-size: 14px;
                 transform: translateY(0);
             }
         }
@@ -154,19 +167,20 @@
             z-index: 1001;
         }
 
-        /* Popup styles */
-        .popup {
-            position: absolute;
-            top: 100%; /* Position below the nav */
-            left: 50%;
-            transform: translate(-50%, 10px);
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            display: none; /* Initially hidden */
-            z-index: 2000;
-            white-space: nowrap; /* Prevent text wrapping */
+        /* Play Me link styles */
+        .play-link {
+            color: #ff7e00;
+            text-decoration: none;
+            animation: fadeInPlayButton 2s;
+            font-size: 14px; /* Smaller font size for fine print look */
+            cursor: pointer;
+            margin-top: 100px; /* Add space above the link */
+            transition: color 0.3s;
+        }
+
+        .play-link:hover {
+            color: #ff3d00;
+            cursor: none;
         }
 
         .nav-links li:hover .popup {
@@ -177,7 +191,7 @@
 </head>
 <body>
     <iframe 
-        id=bg-video
+        id="bg-video"
         src="https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=1&playlist=CzDWdnF8ViQ&start=60"
         frameBorder="0"
         allow="autoplay; encrypted-media" 
@@ -188,19 +202,18 @@
             <ul class="nav-links">
                 <li>
                     <a href="#">Home</a>
-                    <div class="popup">This is the Home section placeholder.</div>
                 </li>
                 <li>
                     <a href="#">About</a>
-                    <div class="popup">This is the About section placeholder.</div>
                 </li>
                 <li>
                     <a href="#">Projects</a>
-                    <div class="popup">This is the Projects section placeholder.</div>
                 </li>
                 <li>
                     <a href="#">Awards</a>
-                    <div class="popup">This is the Awards section placeholder.</div>
+                </li>
+                <li>
+                    <a href="#" onclick="playVideo()">Music</a>
                 </li>
             </ul>
         </nav>
@@ -222,6 +235,8 @@
 
     <script>
         const cursor = document.getElementById('customCursor');
+        const videoFrame = document.getElementById('bg-video');
+        var isPlaying = false;
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.pageX + 'px';
@@ -235,6 +250,18 @@
         document.addEventListener('mouseenter', () => {
             cursor.style.display = 'block';
         });
+
+        function playVideo() {
+            if (isPlaying) {
+                videoFrame.style.display = 'none'; // Hide video
+                videoFrame.src = ""; // Stop video
+                isPlaying = false;
+            } else {
+                videoFrame.style.display = 'block'; // Show video
+                videoFrame.src = "https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=0&playlist=CzDWdnF8ViQ&start=60"; // Start with sound
+                isPlaying = true;
+            }
+        }
     </script>
 </body>
 </html>
