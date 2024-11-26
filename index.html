@@ -83,6 +83,15 @@
             color: transparent;
         }
 
+        h2 {
+            margin: 0;
+            font-size: 80px;
+            background: linear-gradient(90deg, #ff7e00, #ff3d00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -187,6 +196,11 @@
             display: block; /* Show on hover */
             cursor: none;
         }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
     </style>
 </head>
 <body>
@@ -197,23 +211,23 @@
         allow="autoplay; encrypted-media" 
         allowfullscreen>
     </iframe>
-    <div class="content">
+    <div class="content" id="content">
         <nav>
             <ul class="nav-links">
                 <li>
-                    <a href="#">Home</a>
+                    <a href="" onclick="loadContent('index')">Home</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="#" onclick="loadContent('about')">About</a>
                 </li>
                 <li>
-                    <a href="#">Projects</a>
+                    <a href="#" onclick="loadContent('projects')">Projects</a>
                 </li>
                 <li>
-                    <a href="#">Awards</a>
+                    <a href="#" onclick="loadContent('awards')">Awards</a>
                 </li>
                 <li>
-                    <a href="#" onclick="playVideo()">Music</a>
+                    <a href="#" onclick="loadContent('music');">Music</a>
                 </li>
             </ul>
         </nav>
@@ -236,6 +250,7 @@
     <script>
         const cursor = document.getElementById('customCursor');
         const videoFrame = document.getElementById('bg-video');
+        const contentDiv = document.getElementById('content');
         var isPlaying = false;
 
         document.addEventListener('mousemove', (e) => {
@@ -251,16 +266,37 @@
             cursor.style.display = 'block';
         });
 
-        function playVideo() {
-            if (isPlaying) {
-                videoFrame.style.display = 'none'; // Hide video
-                videoFrame.src = ""; // Stop video
-                isPlaying = false;
+        function toggleVideo(shouldPlay) {
+            if (shouldPlay) {
+                videoFrame.style.display = 'block';
+                videoFrame.src = "https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=0&playlist=CzDWdnF8ViQ&start=60";
             } else {
-                videoFrame.style.display = 'block'; // Show video
-                videoFrame.src = "https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=0&playlist=CzDWdnF8ViQ&start=60"; // Start with sound
-                isPlaying = true;
+                videoFrame.style.display = 'none';
+                videoFrame.src = "";
             }
+        }
+
+        function loadContent(page) {
+            if (page != 'music') {
+                toggleVideo(false);
+            } else {
+                toggleVideo(true);
+            }
+            fetch(`${page}.html`)
+                .then(response => {
+                    console.log("Response received");
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(data => {
+                    console.log("Data received: ", data);
+                    contentDiv.classList.add('fade-out');
+                    setTimeout(() => {
+                        contentDiv.innerHTML = data;
+                        contentDiv.classList.remove('fade-out');
+                    }, 500);
+                })
+                .catch(error => console.error('Error loading content:', error));
         }
     </script>
 </body>
