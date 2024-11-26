@@ -250,6 +250,8 @@
     <script>
         const cursor = document.getElementById('customCursor');
         const videoFrame = document.getElementById('bg-video');
+        const contentDiv = document.getElementById('content');
+        var isPlaying = false;
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.pageX + 'px';
