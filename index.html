@@ -282,9 +282,11 @@
             if (shouldShowImage) {
                 imageDiv.style.display = 'block';
                 videoFrame.style.display = 'none';
+                videoFrame.src = '';
             } else {
                 imageDiv.style.display = 'none';
                 videoFrame.style.display = 'block';
+                videoFrame.src = 'https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=0&playlist=CzDWdnF8ViQ&start=60';
             }
         }
 
