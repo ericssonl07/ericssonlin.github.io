@@ -19,7 +19,8 @@
             height: 100vh;
             cursor: none; 
             position: relative;
-            overflow: hidden; /* Prevent scrolling */
+            /* enable scrolling */
+            overflow-y: auto;
             user-select: none;
         }
 
@@ -61,18 +62,7 @@
             width: 100%;
             background-color: rgba(255, 255, 255, 0.9); /* White backdrop with slight transparency */
             z-index: 1000;
-        }
-
-        .nav-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 65px;
-            background-color: white; /* White background */
-            padding: 10px 0; /* Optional padding for some spacing */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-            z-index: 1000; /* Make sure it sits above other elements */
+            transition: top 0.3s; /* Smooth transition for hiding/showing */
         }
 
         .nav-links {
@@ -217,6 +207,7 @@
             transform: translate(-50%, -50%);
             transition: background-color 0.3s;
             z-index: 1001;
+            border: 1px solid #b39e88;
         }
 
         .fade-out {
@@ -312,6 +303,23 @@
                 })
                 .catch(error => console.error('Error loading content:', error));
         }
+
+        let lastScrollTop = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScrollTop) {
+                // Scrolling down
+                nav.style.top = "-60px"; // Hide the nav
+            } else {
+                // Scrolling up
+                nav.style.top = "0"; // Show the nav
+            }
+            
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+        });
     </script>
 </body>
 </html>
