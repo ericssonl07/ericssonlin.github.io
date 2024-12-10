@@ -7,8 +7,10 @@
     <style>
         body {
             margin: 0;
-            font-family: 'Times New Roman', Times, serif;
-            background-color: #000;
+            font-family: ivypresto-display;
+            font-style: normal;
+            font-weight: 100;
+            background-color: #b39e88;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -17,8 +19,24 @@
             height: 100vh;
             cursor: none; 
             position: relative;
-            overflow: hidden; /* Prevent scrolling */
+            /* enable scrolling */
+            overflow-y: auto;
             user-select: none;
+        }
+
+        #bg-image {
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/statue.png');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5;
+            transform: scale(0.75);
+            transform-origin: center;
         }
 
         #bg-video {
@@ -27,11 +45,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            mask-image: linear-gradient(to top, transparent 0%, black 50%, transparent 100%);
-            user-select: none;
-            pointer-events: none;
-            filter: grayscale(1);
-            aspect-ratio: 16/9;
+            height: 100%;
             display: none; /* Hide the video initially */
         }
 
@@ -46,41 +60,82 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(255, 255, 255, 0.9); /* White backdrop with slight transparency */
             z-index: 1000;
+            transition: top 0.3s; /* Smooth transition for hiding/showing */
         }
 
         .nav-links {
             position: fixed;
             left: 50%;
             list-style: none;
-            padding: 30px 50px;
+            padding: 30px 150px;
             margin: 0;
             display: flex;
             justify-content: right; /* Align nav links to the right */
             gap: 50px;
         }
 
+        .nav-links li {
+            position: relative; /* Make the list item a positioning context */
+        }
+
         .nav-links li a {
-            color: #ff7e00;
-            text-decoration: none;
-            font-size: 20px;
-            transition: color 0.3s;
+            color: #000; /* Black text for contrast */
+            text-decoration: none; /* Remove default underline */
+            font-size: 15px;
+            padding: 0 0 50px; /* Add some padding to create space for the underline */
+            transition: color 0.25s; /* Smooth transition for color */
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px; /* Position the underline at the bottom */
+            height: 2px; /* Thickness of the underline */
+            width: 100%; /* Full width of the link */
+            background-color: #666666; /* Color of the underline */
+            transform: scaleX(0); /* Start with a scale of 0 (invisible) */
+            transform-origin: bottom right; /* Anchor the transform to the right */
+            transition: transform 0.6s ease; /* Animate the transform */
         }
 
         .nav-links li a:hover {
-            color: #ff3d00;
             cursor: none;
+            color: #666666; /* Change hover color for visibility */
+        }
+
+        .nav-links li a:hover::after {
+            transform: scaleX(1); /* Scale to full width on hover */
+            transform-origin: bottom left; /* Change origin to left for left-to-right animation */
         }
 
         h1 {
             margin: 0;
             font-size: 80px;
+            font-family: ivypresto-display, serif;
+            font-style: normal;
+            font-weight: 100;
             animation: fadeIn 2s;
-            background: linear-gradient(90deg, #ff7e00, #ff3d00);
+            background: #fff;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+
+        .quote p {
+            font-style: italic;
+            margin: 5px 0; /* Adjust the margin for top and bottom */
+            font-size: 50px; /* Keep the desired font size */
+            line-height: 2.0; /* Adjust line height for closer spacing */
+            color: #fff; /* Text color */
+        }
+
+        .quote .quote_subtitle p {
+            font-size: 20px; /* Set font size */
+            color: #fff; /* Text color */
+            line-height: 2.0; /* Adjust line height for closer spacing */
         }
 
         @keyframes fadeIn {
@@ -92,19 +147,6 @@
             to {
                 opacity: 1;
                 font-size: 80px;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInPlayButton {
-            from {
-                opacity: 0;
-                font-size: 0px;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                font-size: 14px;
                 transform: translateY(0);
             }
         }
@@ -159,37 +201,23 @@
             position: fixed;
             width: 20px;
             height: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(13, 0, 53, 0.547);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
             transition: background-color 0.3s;
             z-index: 1001;
+            border: 1px solid #b39e88;
         }
 
-        /* Play Me link styles */
-        .play-link {
-            color: #ff7e00;
-            text-decoration: none;
-            animation: fadeInPlayButton 2s;
-            font-size: 14px; /* Smaller font size for fine print look */
-            cursor: pointer;
-            margin-top: 100px; /* Add space above the link */
-            transition: color 0.3s;
-        }
-
-        .play-link:hover {
-            color: #ff3d00;
-            cursor: none;
-        }
-
-        .nav-links li:hover .popup {
-            display: block; /* Show on hover */
-            cursor: none;
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
     </style>
 </head>
 <body>
+    <div id="bg-image"></div>
     <iframe 
         id="bg-video"
         src="https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=1&playlist=CzDWdnF8ViQ&start=60"
@@ -197,29 +225,17 @@
         allow="autoplay; encrypted-media" 
         allowfullscreen>
     </iframe>
-    <div class="content" id="mainContent">
+    <div class="content" id="content">
         <nav>
             <ul class="nav-links">
-                <li>
-                    <a href="#" onclick="changeContent('Home')">Home</a>
-                </li>
-                <li>
-                    <a href="#" onclick="changeContent('About')">About</a>
-                </li>
-                <li>
-                    <a href="#" onclick="changeContent('Projects')">Projects</a>
-                </li>
-                <li>
-                    <a href="#" onclick="changeContent('Awards')">Awards</a>
-                </li>
-                <li>
-                    <a href="#" onclick="changeContent('Music')">Music</a>
-                </li>
+                <li><a href="" onclick="loadContent('index')">Home</a></li>
+                <li><a href="#" onclick="loadContent('about')">About</a></li>
+                <li><a href="#" onclick="loadContent('projects')">Projects</a></li>
+                <li><a href="#" onclick="loadContent('music');">Music</a></li>
             </ul>
         </nav>
-        <h1 id="mainTitle">ERICSSON LIN</h1>
-        <h1 id="subTitle">林家泓</h1>
-        <div class="social-links" id="socialLinks">
+        <h1>ERICSSON LIN</h1>
+        <div class="social-links">
             <a href="https://github.com/ericssonl07/" target="_blank">
                 <img src="assets/github.png" alt="GitHub">
             </a>
@@ -236,6 +252,8 @@
     <script>
         const cursor = document.getElementById('customCursor');
         const videoFrame = document.getElementById('bg-video');
+        const imageDiv = document.getElementById('bg-image');
+        const contentDiv = document.getElementById('content');
 
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.pageX + 'px';
@@ -249,43 +267,57 @@
         document.addEventListener('mouseenter', () => {
             cursor.style.display = 'block';
         });
-
-        function playVideo(shouldPlay) {
-            if (shouldPlay === false) {
-                videoFrame.style.display = 'none'; // Hide video
-                videoFrame.src = ""; // Stop video
+        function toggleBackground(shouldShowImage) {
+            if (shouldShowImage) {
+                imageDiv.style.display = 'block';
+                videoFrame.style.display = 'none';
+                videoFrame.src = '';
             } else {
-                videoFrame.style.display = 'block'; // Show video
-                videoFrame.src = "https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=0&playlist=CzDWdnF8ViQ&start=60"; // Start with sound
+                imageDiv.style.display = 'none';
+                videoFrame.style.display = 'block';
+                videoFrame.src = 'https://www.youtube.com/embed/CzDWdnF8ViQ?autoplay=1&controls=0&disablekb=1&fs=0&loop=1&mute=0&playlist=CzDWdnF8ViQ&start=60';
             }
         }
 
-        function changeContent(section) {
-            const mainTitle = document.getElementById('mainTitle');
-            const subTitle = document.getElementById('subTitle');
-            const socialLinks = document.getElementById('socialLinks');
-
-            if (section === 'Home') {
-                mainTitle.textContent = 'ERICSSON LIN';
-                subTitle.textContent = '林家泓';
-                socialLinks.innerHTML = `
-                    <a href="https://github.com/ericssonl07/" target="_blank"><img src="assets/github.png" alt="GitHub"></a>
-                    <a href="https://www.linkedin.com/in/jiahong-ericsson-lin/" target="_blank"><img src="assets/linkedin.png" alt="LinkedIn"></a>
-                    <a href="https://www.youtube.com/@ericssonlin7114" target="_blank"><img src="assets/youtube.png" alt="YouTube"></a>
-                `;
-                playVideo(false);
-            } else if (section === 'Music') {
-                mainTitle.textContent = 'Music placeholder';
-                subTitle.textContent = '{Music section content} placeholder';
-                socialLinks.innerHTML = ''; // Optionally clear or modify social links for Music section
-                playVideo(true);
+        function loadContent(page) {
+            if (page !== 'music') {
+                toggleBackground(true); // Show image
             } else {
-                mainTitle.textContent = `${section} placeholder`;
-                subTitle.textContent = `{${section} section content} placeholder`;
-                socialLinks.innerHTML = ''; // Clear social links for other sections
-                playVideo(false);
+                toggleBackground(false); // Show video
             }
+            fetch(`${page}.html`)
+                .then(response => {
+                    console.log("Response received");
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.text();
+                })
+                .then(data => {
+                    console.log("Data received: ", data);
+                    contentDiv.classList.add('fade-out');
+                    setTimeout(() => {
+                        contentDiv.innerHTML = data;
+                        contentDiv.classList.remove('fade-out');
+                    }, 500);
+                })
+                .catch(error => console.error('Error loading content:', error));
         }
+
+        let lastScrollTop = 0;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll > lastScrollTop) {
+                // Scrolling down
+                nav.style.top = "-60px"; // Hide the nav
+            } else {
+                // Scrolling up
+                nav.style.top = "0"; // Show the nav
+            }
+            
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile or negative scrolling
+        });
     </script>
 </body>
 </html>
