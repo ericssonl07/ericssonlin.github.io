@@ -11,13 +11,104 @@
                 <a href="#" onclick="loadContent('projects')">Projects</a>
             </li>
             <li>
-                <a href="#" onclick="loadContent('awards')">Awards</a>
-            </li>
-            <li>
                 <a href="#" onclick="loadContent('music');">Music</a>
             </li>
         </ul>
     </nav>
 </div>
 <h2>Music</h2>
-<p>This is the music page.</p>
+<p>Site under construction.</p>
+<a href="https://www.youtube.com/@ericssonlin7114">Visit my Channel</a>
+<style>
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9); /* White backdrop with slight transparency */
+        z-index: 1000;
+        transition: top 0.3s; /* Smooth transition for hiding/showing */
+    }
+
+    .nav-links {
+        position: fixed;
+        left: 50%;
+        list-style: none;
+        padding: 30px 150px;
+        margin: 0;
+        display: flex;
+        justify-content: right; /* Align nav links to the right */
+        gap: 50px;
+    }
+
+    .nav-links li {
+        position: relative; /* Make the list item a positioning context */
+    }
+
+    .nav-links li a {
+        color: #fff; /* Black text for contrast */
+        text-decoration: none; /* Remove default underline */
+        font-size: 15px;
+        padding: 0 0 50px; /* Add some padding to create space for the underline */
+        transition: color 0.25s; /* Smooth transition for color */
+    }
+
+    .nav-links li a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px; /* Position the underline at the bottom */
+        height: 2px; /* Thickness of the underline */
+        width: 100%; /* Full width of the link */
+        background-color: #fff; /* Color of the underline */
+        transform: scaleX(0); /* Start with a scale of 0 (invisible) */
+        transform-origin: bottom right; /* Anchor the transform to the right */
+        transition: transform 0.6s ease; /* Animate the transform */
+    }
+
+    .nav-links li a:hover {
+        cursor: none;
+        color: #fff; /* Change hover color for visibility */
+    }
+
+    .nav-links li a:hover::after {
+        transform: scaleX(1); /* Scale to full width on hover */
+        transform-origin: bottom left; /* Change origin to left for left-to-right animation */
+    }
+
+    h2 {
+        font-family: ivypresto-display;
+        font-size: 2em;
+        padding-bottom: 10px;
+    }
+
+    a {
+        font-family: tachyon, sans-serif;
+        font-size: 1.2em;
+        font-style: normal;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 20px;
+        position: relative; /* For the underline effect */
+        display: inline-block; /* Ensures the link takes up only the necessary width */
+    }
+
+    a:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -4px; /* Adjusted to position the underline closer to the text */
+        width: 100%;
+        height: 1px; /* Adjust thickness of underline */
+        background-color: #fff; /* Underline color */
+        transform: scaleX(0);
+        transition: transform 0.3s ease; /* Animation duration */
+    }
+
+    a:hover:after {
+        transform: scaleX(1); /* Scale the underline to full width on hover */
+    }
+
+    a:hover {
+        cursor: none; /* Change cursor to pointer on hover */
+    }
+</style>
